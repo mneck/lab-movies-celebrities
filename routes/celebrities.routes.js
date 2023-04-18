@@ -3,8 +3,20 @@ const router = require("express").Router();
 const Celebrity = require("../models/Celebrity.model");
 
 router.get("/celebrities/create", (req, res, next) => {
-  // Add celebrity
+  // Create celebrity
   res.render("celebrities/new-celebrity").catch((err) => next(err));
+});
+
+router.get("/celebrities", (req, res, next) => {
+  //lists all celebrities
+  Celebrity.find()
+    .then((celebrityFromDB) => {
+      console.log(celebrityFromDB);
+      res.render("celebrities/celebrities", {
+        celebrities: celebrityFromDB,
+      });
+    })
+    .catch((err) => next(err));
 });
 
 // router.post("/celebrities/create", (req, res, next) => {
